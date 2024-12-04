@@ -1,0 +1,26 @@
+<div class="product">
+    <div class="product-details">
+      <!--<img src="{{'assets/images/robot-parts/'+ product.imageName}}" alt="{{product.name}}" />--> <!-- Interpolation to print the image-->
+      <!-- Above one was one way of doing, other way is by functions-->
+      <img [src]="getImageUrl(product)" [alt]="product.name"/>
+      <div class="product-info">
+        <div class="name">{{product.name}}</div>
+        <div class="description">{{product.description}}</div> <!--Text interpolation-->
+        <div class="category">Part Type: {{product.category}}</div>
+      </div>
+    </div>
+    <div class="price">
+      <!-- *ngIf="product.discount === 0" this was before using strikethrough-->
+       <!--The strikethrough is done with condition to stike the price only when the discount is there-->
+      <div 
+        [ngStyle]="{color : product.discount>0 ? 'red' : ''}"
+        [ngClass] = "{strikethrough: product.discount>0}"
+        >
+        {{(product.price * 84) | currency: "INR"}}</div> <!--&#8377; INR currency code-->
+      <!--here we are using *ngIf to hiding and showing the contents which are necessary-->
+      <div class="discount" *ngIf="product.discount > 0">
+         {{ (product.price * (1-product.discount) * 84) | currency: "INR"}}
+      </div>
+      <button class="cta" (click)="buyButtonClicked(product)">Buy</button>
+    </div>
+  </div>
